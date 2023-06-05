@@ -45,11 +45,21 @@ class Test(MDApp):
 MDBoxLayout:
     adaptive_height: True
     font_name: 'AmharicFont'
+    orientation: 'vertical'
+    MDLabel:
+        font_name: 'AmharicFont'
+        padding: (20, 0, 10, 0)
+        text: "the_word"
+    MDLabel:
+        font_name: 'AmharicFont'
+        padding: (20, 0, 10, 0)
+        text: "the_wax"
+        
     MDLabel:
         font_name: 'AmharicFont'
         padding:(20, 0, 10, 0)
-        text: "gold_wax_solution"
-'''.replace('gold_wax_solution', text.get('answer'))),
+        text: "the_gold"
+'''.replace('gold_wax_solution', text.get('answer')).replace('the_word', text.get('word')).replace('the_wax', text.get('wax')).replace('the_gold', text.get('gold'))),
 
                     panel_cls=MDExpansionPanelThreeLine(
                         text="Ai ",
@@ -114,7 +124,7 @@ MDLabel:
             card = """
 MDCard:
     size_hint: None, None
-    size: "280dp", "180dp"
+    size: "250dp", "180dp"
     pos_hint: {'center_x': .5}
 
     BoxLayout:

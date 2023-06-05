@@ -1,6 +1,5 @@
 import pickle
 
-
 import sys
 import os
 
@@ -12,8 +11,7 @@ def answer(question: str = None):
         vectorizer, classifier = pickle.load(f)
 
         # Example usage
-        if question is None :
-            question = sys.argv[1]
+        if question is None:
             question = input("insert: ")
 
         # Preprocess the question using the same vectorizer
@@ -28,7 +26,16 @@ def answer(question: str = None):
         print("Predicted solution:", predicted_solution[0])
         print("Confidence:", round(confidence * 100, 4), " %")
 
+        gold_wax = predicted_solution[0].split('\n')
+
         return {
             "answer": predicted_solution[0].replace('\n', ''),
-            'confidence': f"{round(confidence * 100)}፨"
+            "word": gold_wax[0],
+            "wax": gold_wax[1],
+            "gold": gold_wax[2],
+            'confidence': f"{round(confidence * 100, 2)}%"
         }
+
+
+if __name__ == "__main__":
+    answer()

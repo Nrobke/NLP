@@ -3,7 +3,7 @@ from kivymd.app import MDApp
 from kivy.core.text import LabelBase
 from kivymd.uix.label import MDLabel
 from kivy.metrics import dp
-from Ai.ai import  answer
+from Ai.ai import answer
 from data import gold_and_wax
 from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelThreeLine, MDExpansionPanelTwoLine
 from kivymd.uix.boxlayout import MDBoxLayout
@@ -11,21 +11,20 @@ from datetime import datetime
 from kivy.core.window import Window
 
 
-class Test(MDApp):
+class AI(MDApp):
     title = "መሪጌታ"
 
     def build(self):
-        LabelBase.register("AmharicFont", "./chiret.ttf")
-        self.theme_cls.theme_style_switch_animation = True
-        self.theme_cls.theme_style_switch_animation_duration = 1.0
+        LabelBase.register("AmharicFont", "./PGUNICODE1.ttf")
+        self.theme_cls.theme_style_switch_animation = False
         self.theme_cls.theme_style = "Dark"
         return Builder.load_file('main.kv')
 
-    def switch_theme(self):
-        if self.theme_cls.theme_style == "Dark":
-            self.theme_cls.theme_style = "Light"
-        else:
-            self.theme_cls.theme_style = "Dark"
+    # def switch_theme(self):
+    #     if self.theme_cls.theme_style == "Dark":
+    #         self.theme_cls.theme_style = "Light"
+    #     else:
+    #         self.theme_cls.theme_style = "Dark"
 
     def open_tab(self, tab_name, question, incoming=False):
 
@@ -59,7 +58,7 @@ MDBoxLayout:
         font_name: 'AmharicFont'
         padding:(20, 0, 10, 0)
         text: "the_gold"
-'''.replace('gold_wax_solution', text.get('answer')).replace('the_word', text.get('word')).replace('the_wax', text.get('wax')).replace('the_gold', text.get('gold'))),
+'''.replace('the_word', text.get('word')).replace('the_wax', text.get('wax')).replace('the_gold', text.get('gold'))),
 
                     panel_cls=MDExpansionPanelThreeLine(
                         text="Ai ",
@@ -93,28 +92,47 @@ MDBoxLayout:
             message = text_input.text
             if not message.isspace():
                 label = Builder.load_string('''
-MDLabel:
-    text: 'question'
-    adaptive_height: True,
-    padding_x: '15dp'
-    font_name: 'AmharicFont'
-    halign: 'right'
+MDCard:
+    size_hint: 0.5, None
+    height: self.minimum_height
+    padding: dp(10)
+    md_bg_color: "#453939"
+    pos_hint: {'center_x': .7}
+    MDLabel:
+        text: 'question'
+        adaptive_height: False,
+        padding_x: '15dp'
+        font_name: 'AmharicFont'
+        halign: 'right'
         '''.replace('question', message.strip()))
 
                 self.root.ids.chat_messages.add_widget(label)
                 text_input.text = ""
                 api_answer = answer(message.strip())
-                self.send_message(True, f"የእውቀት መጠን፡ {api_answer.get('confidence')} \t መልስ፡ {api_answer.get('answer')}")
+                if api_answer.get("success") is True:
+                    self.send_message(True, f"---> {api_answer.get('word')} ---> {api_answer.get('wax')} ---> {api_answer.get('gold')} ---> Confidence: {api_answer.get('confidence')}")
+                    self.add_conversation(False, message.strip())
+                    self.add_conversation(True, api_answer)
+                else:
+                    self.send_message(True, api_answer.get('response'))
+
+
             else:
                 text_input.text = ""
         else:
             label = Builder.load_string("""
-MDLabel:
-    text: 'ai_answer'
-    adaptive_height: True,
-    padding_x: '15dp'
-    font_name: 'AmharicFont'
-    halign: 'left'
+MDCard:
+    size_hint: 0.5, None
+    height: self.minimum_height
+    padding: dp(10)
+    md_bg_color: "#2B2C36"
+    pos_hint: {'center_x': .3}
+    MDLabel:
+        text: 'ai_answer'
+        adaptive_height: True,
+        padding_x: '15dp'
+        font_name: 'AmharicFont'
+        halign: 'left'
         """.replace('ai_answer', incoming_text.strip()))
             self.root.ids.chat_messages.add_widget(label)
 
@@ -152,4 +170,4 @@ MDCard:
             self.root.ids.question_container.add_widget(Builder.load_string(card))
 
 
-Test().run()
+AI().run()

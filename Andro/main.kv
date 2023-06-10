@@ -1,4 +1,3 @@
-
 MDScreen:
 
     MDBottomNavigation:
@@ -9,9 +8,8 @@ MDScreen:
 
         MDBottomNavigationItem:
             name: 'screen 1'
-            text: 'Ai'
+            text: 'Gold and Wax'
             icon: 'brain'
-            badge_icon: "numeric-3"
             font_name: 'AmharicFont'
 
             BoxLayout:
@@ -29,17 +27,12 @@ MDScreen:
                         font_name: 'AmharicFont'
                         id: question_container
 
-            MDFloatingActionButton:
-                icon: "theme-light-dark"  # Replace with the appropriate icon
-                pos_hint: {"right": 0.95, "top": 0.9}
-                elevation_normal: 0  # Remove button elevation
-                on_release: app.switch_theme()  # Call a function to switch the theme
+
         
         MDBottomNavigationItem:
             name: 'screen 2'
-            text: 'Ask Ai'
+            text: 'History'
             icon: 'robot'
-            badge_icon: "numeric-10"
             font_name: 'AmharicFont'
 
             BoxLayout:
@@ -51,26 +44,14 @@ MDScreen:
                         cols: 1
                         adaptive_height: True
 
-            MDFloatingActionButton:
-                icon: "theme-light-dark"  # Replace with the appropriate icon
-                pos_hint: {"right": 0.95, "top": 0.9}
-                elevation_normal: 0  # Remove button elevation
-                on_release: app.switch_theme()  # Call a function to switch the theme
+
 
 
         MDBottomNavigationItem:
             name: 'screen 3'
             text: 'Test Me'
             icon: 'cogs'
-            badge_icon: "numeric-5"
             font_name: 'AmharicFont'
-
-            MDFloatingActionButton:
-                icon: "theme-light-dark"  # Replace with the appropriate icon
-                pos_hint: {"right": 0.95, "top": 0.9}
-                elevation_normal: 0  # Remove button elevation
-                on_release: app.switch_theme()  # Call a function to switch the theme
-
             BoxLayout:
                 font_name: 'AmharicFont'
                 orientation: 'vertical'
@@ -94,6 +75,10 @@ MDScreen:
                         font_name: 'AmharicFont'
                         id: text_input
                         mode: "fill"
+                        size_hint_x: .5
+                        max_height: "200dp"
+                        fill_color: 0, 0, 0, .4
+                        multiline: True
 
                     MDIconButton:
                         icon: 'send'

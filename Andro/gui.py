@@ -6,9 +6,11 @@ from kivy.metrics import dp
 from Ai.ai import answer
 from data import gold_and_wax
 from kivymd.uix.expansionpanel import MDExpansionPanel, MDExpansionPanelThreeLine, MDExpansionPanelTwoLine
+from kivy.core.clipboard import Clipboard
 from kivymd.uix.boxlayout import MDBoxLayout
 from datetime import datetime
 from kivy.core.window import Window
+
 
 
 class AI(MDApp):
@@ -35,6 +37,10 @@ class AI(MDApp):
         self.add_conversation(False, question)
         self.add_conversation(True, question_answer)
 
+    def copy_to_clipboard(self, label):
+        text = label.text
+        Clipboard.copy(text)
+
     def add_conversation(self, incoming, text):
         if incoming:
             self.root.ids.ask_ai_message.add_widget(
@@ -42,19 +48,23 @@ class AI(MDApp):
                     icon='robot',
                     content=Builder.load_string('''
 MDBoxLayout:
+    md_bg_color: "#21292B"
     adaptive_height: True
     font_name: 'AmharicFont'
     orientation: 'vertical'
     MDLabel:
+        color: "#DB9463"
         font_name: 'AmharicFont'
         padding: (20, 0, 10, 0)
         text: "the_word"
     MDLabel:
+        color: "#C7D7D7"
         font_name: 'AmharicFont'
         padding: (20, 0, 10, 0)
         text: "the_wax"
         
     MDLabel:
+        color: "#F79200"
         font_name: 'AmharicFont'
         padding:(20, 0, 10, 0)
         text: "the_gold"
@@ -72,12 +82,14 @@ MDBoxLayout:
                     icon='account',
                     content=Builder.load_string('''
 MDBoxLayout:
+    md_bg_color: "#21292B"
     adaptive_height: True
     font_name: 'AmharicFont'
     MDLabel:
         font_name: 'AmharicFont'
         padding:(20, 0, 10, 0)
         text: "gold_wax_text"
+        color: "#C7D7D7"
 '''.replace("gold_wax_text", text)),
                     panel_cls=MDExpansionPanelTwoLine(
                         text="Question",
@@ -96,10 +108,12 @@ MDCard:
     size_hint: 0.5, None
     height: self.minimum_height
     padding: dp(10)
-    md_bg_color: "#453939"
+    md_bg_color: "#023C35"
     pos_hint: {'center_x': .7}
     MDLabel:
         text: 'question'
+        theme_text_color: "Custom"
+        text_color: "#C7D7D7"
         adaptive_height: False,
         padding_x: '15dp'
         font_name: 'AmharicFont'
@@ -129,6 +143,8 @@ MDCard:
     pos_hint: {'center_x': .3}
     MDLabel:
         text: 'ai_answer'
+        theme_text_color: "Custom"
+        text_color: "#C7D7D7"
         adaptive_height: True,
         padding_x: '15dp'
         font_name: 'AmharicFont'
@@ -141,6 +157,7 @@ MDCard:
         for text in [item.get('phrase') for item in gold_and_wax]:
             card = """
 MDCard:
+    md_bg_color: "#2A3030"
     size_hint: None, None
     size: "250dp", "180dp"
     pos_hint: {'center_x': .5}
@@ -154,6 +171,8 @@ MDCard:
             id: question_1
             font_name: 'AmharicFont'
             text: "gold_and_wax_text"
+            theme_text_color: "Custom"
+            text_color: "#C7D7D7"
 
         MDRelativeLayout:
             size_hint_y: None
@@ -165,6 +184,15 @@ MDCard:
                 icon: 'help-circle'
                 theme_text_color: "Secondary"
                 on_release: app.open_tab('screen 2', "gold_and_wax_text", False)
+                md_bg_color: "#3B474A"
+                
+            MDIconButton:
+                icon: 'content-copy'
+                theme_text_color: "Secondary"
+                on_release: app.copy_to_clipboard(root.ids.question_1)
+                pos_hint: {'center_x': .8}
+                halign: "right"
+                md_bg_color: "#3B474A"
 """.replace("gold_and_wax_text", text)
 
             self.root.ids.question_container.add_widget(Builder.load_string(card))

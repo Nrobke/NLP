@@ -1,12 +1,14 @@
 MDScreen:
 
     MDBottomNavigation:
-        #panel_color: "#eeeaea"
+        panel_color: "#071416"
         selected_color_background: "orange"
         text_color_active: "lightgrey"
         id: bottom_navigation
 
+
         MDBottomNavigationItem:
+            md_bg_color: "#071416"
             name: 'screen 1'
             text: 'Gold and Wax'
             icon: 'brain'
@@ -30,6 +32,7 @@ MDScreen:
 
         
         MDBottomNavigationItem:
+            md_bg_color: "#071416"
             name: 'screen 2'
             text: 'History'
             icon: 'robot'
@@ -48,6 +51,7 @@ MDScreen:
 
 
         MDBottomNavigationItem:
+            md_bg_color: "#071416"
             name: 'screen 3'
             text: 'Test Me'
             icon: 'cogs'
@@ -56,14 +60,16 @@ MDScreen:
                 font_name: 'AmharicFont'
                 orientation: 'vertical'
 
-                ScrollView:
-                    do_scroll_x: False
-                    font_name: 'AmharicFont'
-                    BoxLayout:
-                        font_name: 'AmharicFont'
-                        orientation: 'vertical'
-                        id: chat_messages
-                        spacing: dp(15)
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDScrollView:
+                        do_scroll_x: False
+                        MDBoxLayout:
+                            orientation: 'vertical'
+                            padding: dp(25)
+                            spacing: dp(15)
+                            id: chat_messages
+                            adaptive_height: True
 
                 MDBoxLayout:
                     orientation: 'horizontal'
@@ -77,7 +83,7 @@ MDScreen:
                         mode: "fill"
                         size_hint_x: .5
                         max_height: "200dp"
-                        fill_color: 0, 0, 0, .4
+                        fill_color: 0, 0, 0, .1
                         multiline: True
 
                     MDIconButton:

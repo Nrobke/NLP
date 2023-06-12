@@ -17,9 +17,9 @@ def answer(question: str = None):
         if not question:
             return {"success": "false", "response": "Please insert a poem (ቅኔ)"}
 
-
+        preprocessed = question.translate({ord(i): None for i in '፣።፤'})
         # Preprocess the question using the same vectorizer
-        X_test = vectorizer.transform([question])
+        X_test = vectorizer.transform([preprocessed])
 
         # Make predictions using the loaded classifier
         predicted_solution = classifier.predict(X_test)
@@ -52,3 +52,5 @@ def answer(question: str = None):
 
 if __name__ == "__main__":
     answer()
+
+
